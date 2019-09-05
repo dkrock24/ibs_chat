@@ -16,6 +16,8 @@ var messages = [{
 	photo : null
 }];
 
+var userList = [];
+
 io.on('connection',function(socket){
 	console.log("New connection "+ socket.handshake.address );
 	
@@ -26,7 +28,17 @@ io.on('connection',function(socket){
 		messages.push(data);
 
 		io.sockets.emit('messages', messages);
-		console.log("-> ",io.sockets.ids);
+
+		var x = userList.find(item => item.nickname == data.nickname);
+
+		if(x == undefined){
+			userList.push(data);
+			io.sockets.emit('registration', userList);	
+		}else{
+			console.log(data.nickname);
+			
+		}
+
 	})
 });
 
