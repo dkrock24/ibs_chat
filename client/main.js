@@ -130,7 +130,8 @@ function addUser(message){
 function shareUser(data){
 
 	var html_user = "";
-	console.log(' X ',data);
+	var div_msgs = document.getElementById('inbox_chat');
+	div_msgs.innerHTML = "";
 
 	html_user = data.map(function(nickname, index){
 
@@ -149,6 +150,19 @@ function shareUser(data){
 		
 	}).join(' ');
 
-	var div_msgs = document.getElementById('inbox_chat');
+	
 	div_msgs.innerHTML = html_user;
+}
+
+function ConfirmClose(){
+	var nick = document.getElementById('nickname').value;
+
+	socket.emit('close', nick);
+}
+
+function HandleOnClose(){
+
+	//nickname: document.getElementById('nickname').value,
+
+	//socket.emit('close', nickname);
 }

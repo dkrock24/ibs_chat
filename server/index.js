@@ -35,11 +35,21 @@ io.on('connection',function(socket){
 			userList.push(data);
 			io.sockets.emit('registration', userList);	
 		}else{
-			console.log(data.nickname);
+			//console.log(data.nickname);
 			
 		}
 
-	})
+	});
+
+	socket.on('close', function(name){
+
+		var x = userList.find(item => item.nickname == name);
+
+		delete userList.splice(userList.indexOf(x),1);
+
+		console.log(userList);
+		io.sockets.emit('registration', userList);
+	});
 });
 
 server.listen(6677, function(){
